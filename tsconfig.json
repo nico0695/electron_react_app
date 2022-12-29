@@ -14,5 +14,14 @@
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
-  }
+
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+  },
+  "exclude": [
+    // "node_modules",
+    "dist",
+    "build"
+  ]
 }

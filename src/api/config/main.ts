@@ -6,7 +6,10 @@ import * as url from 'url';
 
 import * as isDev from 'electron-is-dev';
 
-function createWindow() {
+import connectionSource from './ormconfig';
+import { prueba } from '../modules/prueba/prueba';
+
+async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
@@ -33,6 +36,12 @@ function createWindow() {
   if (isDev) {
     win.webContents.openDevTools({ mode: 'detach' });
   }
+
+
+  await connectionSource.initialize();
+
+  prueba()
+
 }
 
 // This method will be called when Electron has finished
