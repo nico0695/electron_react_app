@@ -1,5 +1,5 @@
 // DOC: https://dev.to/elisealcala/start-a-new-electron-app-with-react-and-typescript-5f67
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 import * as path from 'path';
 import * as url from 'url';
@@ -7,15 +7,16 @@ import * as url from 'url';
 import * as isDev from 'electron-is-dev';
 
 import connectionSource from './ormconfig';
-import { prueba } from '../modules/prueba/prueba';
+import exampleController from '../modules/example/controller/example.controller';
 
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
+    width: 1024,
     height: 728,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
@@ -24,24 +25,19 @@ async function createWindow() {
   win.loadURL(
     isDev
       ? 'http://localhost:3000'
-      : 
-      // `file://${path.join(__dirname, 'renderer/index.html')}`
-      url.format({
-        pathname: path.join(__dirname, 'renderer/index.html'),
-        protocol: 'file:',
-        slashes: true
-    })
+      : url.format({
+          pathname: path.join(__dirname, 'renderer/index.html'),
+          protocol: 'file:',
+          slashes: true,
+        })
   );
   // Open the DevTools.
   if (isDev) {
     win.webContents.openDevTools({ mode: 'detach' });
   }
 
-
+  // inicializo la conexion con la base de datos
   await connectionSource.initialize();
-
-  prueba()
-
 }
 
 // This method will be called when Electron has finished
@@ -63,3 +59,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// inicializacion de los oyentes IPC
+new exampleController();

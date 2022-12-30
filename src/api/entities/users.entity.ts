@@ -1,6 +1,5 @@
 import {
   Entity,
-  BaseEntity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
