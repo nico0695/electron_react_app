@@ -20,7 +20,7 @@ export default class ExampleController {
   }
 
   /** Post Routes */
-  // Se debe declarar cara oyente IPC con su respectivo metodo
+  // Se debe declarar cada oyente IPC con su respectivo metodo
   protected registerIPC(): void {
     ipcMain.on('post/createPost', this.createPost);
     ipcMain.on('post/listPosts', this.listPosts);
